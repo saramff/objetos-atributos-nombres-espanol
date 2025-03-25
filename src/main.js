@@ -3,8 +3,9 @@
 //                                                                    //  
 ////////////////////////////////////////////////////////////////////////
 
+import { sentences, trueObjectsName, falseObjectsName } from "./objects.js";
+
 import { createClient } from "@supabase/supabase-js";
-import { sentences } from "./objects.js";
 
 
 /**************************************************************************************/
@@ -36,33 +37,26 @@ const objectsImages = Array.from(
 
 /**************************************************************************************/
 
-const FALSE_OBJECTS_URL =
-  "https://raw.githubusercontent.com/saramff/objects-attributes-images/refs/heads/master/object-attributes-images_NonExperimental";
-const TOTAL_OJECTS_IMAGES = 10;  
+const OBJECTS_PER_CATEGORY = 10;
 
-const trueObjectsExperimental = objectsImages.slice(0, TOTAL_OJECTS_IMAGES);
+const trueObjectsNameSlice = getRandomSlice(trueObjectsName, OBJECTS_PER_CATEGORY);
+const falseObjectsNameSlice = getRandomSlice(falseObjectsName, OBJECTS_PER_CATEGORY);
 
-const trueObjectsExperimentalWithResponse = trueObjectsExperimental.map((objImg) => {
+const trueObjectsNameWithResponse = trueObjectsNameSlice.map((objName) => {
   return {
-    img: objImg,
+    name: objName,
     correct_response: correctKey
   }
 })
 
-// Create pictures arrays for objects images
-const falseObjectsExperimental = Array.from(
-  { length: TOTAL_OJECTS_IMAGES },
-  (_, i) => `${FALSE_OBJECTS_URL}/object-${i + 1}.jpg`
-);
-
-const falseObjectsExperimentalWithResponse = falseObjectsExperimental.map((objImg) => {
+const falseObjectsNameWithResponse = falseObjectsNameSlice.map((objName) => {
   return {
-    img: objImg,
+    name: objName,
     correct_response: incorrectKey
   }
 })
 
-const objectsExperimental = [...trueObjectsExperimentalWithResponse, ...falseObjectsExperimentalWithResponse];
+const objectsExperimental = [...trueObjectsNameWithResponse, ...falseObjectsNameWithResponse];
 
 /**************************************************************************************/
 
@@ -213,12 +207,6 @@ let preload = {
   images: objectsImages,
 };
 timeline.push(preload);
-
-let preload2 = {
-  type: jsPsychPreload,
-  images: falseObjectsExperimental,
-};
-timeline.push(preload2);
 
 
 /* Fixation trial */
@@ -394,7 +382,7 @@ timeline.push(instructionsObjectsNamePresentation);
 let objectsExperimentalRecognitionStimuli = objectsExperimental.map((objExperimental) => {
   return {
     stimulus: `
-      <img class="object-img" src="${objExperimental.img}">
+      <h3 class="sentence">${objExperimental.name}</h3>
       <div class="keys">
         <p class="${correctKey === 'a' ? 'left' : 'right'}">PRESENTE</p>
         <p class="${correctKey === 'a' ? 'right' : 'left'}">NO PRESENTE</p>
@@ -404,13 +392,13 @@ let objectsExperimentalRecognitionStimuli = objectsExperimental.map((objExperime
   };
 });
 
-/* Objects experimental images presentation trial */
-let testObjectsExperimentalImg = {
+/* Objects experimental name presentation trial */
+let testObjectsExperimentalName = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: jsPsych.timelineVariable("stimulus"),
   choices: ['a', 'l'],
   data: {
-    task: "response objects experimental images test",
+    task: "response objects experimental name test",
     correct_response: jsPsych.timelineVariable("correct_response"),
   },
   on_finish: function (data) {
@@ -422,13 +410,13 @@ let testObjectsExperimentalImg = {
   },
 };
 
-/* Test procedure: fixation + objects experimental images presentation */
-let testObjectsExperimentalImgProcedure = {
-  timeline: [fixation, testObjectsExperimentalImg],
+/* Test procedure: fixation + objects experimental name presentation */
+let testObjectsExperimentalNameProcedure = {
+  timeline: [fixation, testObjectsExperimentalName],
   timeline_variables: objectsExperimentalRecognitionStimuli,
   randomize_order: true, // Randomize objects name order
 };
-timeline.push(testObjectsExperimentalImgProcedure);
+timeline.push(testObjectsExperimentalNameProcedure);
 
 
 // /**************************************************************************************/
