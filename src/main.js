@@ -362,7 +362,7 @@ let tetris = {
   `,
   post_trial_gap: 500,
   choices: "NO_KEYS", // Prevent key press
-  trial_duration: 10000, 
+  trial_duration: 1200000, 
 };
 timeline.push(tetris);
 
@@ -461,7 +461,7 @@ timeline.push(saveDataBlock);
 /* Goodbye message trial */
 let goodbye = {
   type: jsPsychHtmlKeyboardResponse,
-  stimulus: "Muchas gracias por haber realizado el experimento. <br /> Pulsa la barra espaciadora para salir del experimento.",
+  stimulus: "Muchas gracias por haber realizado el experimento. <br /> </p></p> Pulsa la barra espaciadora para salir del experimento.",
   choices: [' '],
 };
 timeline.push(goodbye);
