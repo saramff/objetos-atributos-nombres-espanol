@@ -27,7 +27,7 @@ if (randomNumber < 0.5) {
 
 const OBJECTS_URL =
   "https://raw.githubusercontent.com/saramff/objects-attributes-images/refs/heads/master";
-const TOTAL_IMAGES = 10;  
+const TOTAL_IMAGES = 192;  
 
 // Create pictures arrays for objects images
 const objectsImages = Array.from(
@@ -37,7 +37,7 @@ const objectsImages = Array.from(
 
 /**************************************************************************************/
 
-const OBJECTS_PER_CATEGORY = 10;
+const OBJECTS_PER_CATEGORY = 48;
 
 const trueObjectsNameSlice = getRandomSlice(trueObjectsName, OBJECTS_PER_CATEGORY);
 const falseObjectsNameSlice = getRandomSlice(falseObjectsName, OBJECTS_PER_CATEGORY);
@@ -73,7 +73,7 @@ shuffle(objectsExperimental);
 
 /**************************************************************************************/
 
-const TOTAL_SENTENCES = 10;
+const TOTAL_SENTENCES = 48;
 
 // Create function to get a new array with a random slice from other array
 function getRandomSlice(array, sliceSize) {
