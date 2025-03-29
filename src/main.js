@@ -151,10 +151,50 @@ timeline.push({
   }
 });
 
+var participantName = {
+  type: jsPsychSurveyText,
+  preamble: 'A continuación, le preguntaremos algunos datos.',
+  name: 'participantName',
+    button_label:'Continuar',
+    questions: [{prompt:'<div>¿Cuál es su nombre y apellidos?<\div>', rows: 1, columns: 2, required: 'true'}],
+  data: {
+    type:"demo",
+    participantName: participantName,
+  },
+  on_finish: function(data){
+    var help_participantName = data.response.Q0;
+    jsPsych.data.addProperties({participantName: help_participantName});
+  },
+  on_load: function() {
+    document.querySelector('.jspsych-btn').style.marginTop = '20px'; // Adjust margin as needed
+  }
+};
+
+timeline.push(participantName);
+
+var centroAsociado = {
+  type: jsPsychSurveyText,
+  name: 'centroAsociado',
+    button_label:'Continuar',
+    questions: [{prompt:'<div>¿Cuál es su centro asociado?<\div>', rows: 1, columns: 2, required: 'true'}],
+  data: {
+    type:"demo",
+    centroAsociado: centroAsociado,
+  },
+  on_finish: function(data){
+    var help_centroAsociado = data.response.Q0;
+    jsPsych.data.addProperties({centroAsociado: help_centroAsociado});
+  },
+  on_load: function() {
+    document.querySelector('.jspsych-btn').style.marginTop = '20px'; // Adjust margin as needed
+  }
+};
+
+timeline.push(centroAsociado);
+
 var age = {
   type: jsPsychSurveyText,
-  preamble: 'A continuación, le preguntaremos algunos datos demográficos.',
-  name: 'age',
+    name: 'age',
     button_label:'Continuar',
     questions: [{prompt:'<div>¿Cuántos años tiene?<\div>', rows: 1, columns: 2, required: 'true'}],
   data: {
@@ -375,8 +415,8 @@ let instructionsObjectsNamePresentation = {
   type: jsPsychHtmlKeyboardResponse,
   stimulus: `
     <p>Ahora realizará la siguiente tarea:</p>
-    <p>Si ha visto antes el objeto, pulse la tecla '${correctKey.toUpperCase()}' (presente).</p>
-    <p>Si no ha visto antes el objeto, pulse la tecla '${incorrectKey.toUpperCase()}' (no presente).</p>
+    <p>Si ha visto antes el objeto que se nombra, pulse la tecla '${correctKey.toUpperCase()}' (presente).</p>
+    <p>Si no ha visto antes el objeto que se nombra, pulse la tecla '${incorrectKey.toUpperCase()}' (no presente).</p>
     <p>De nuevo, le recomendamos colocar los dedos sobre las teclas ${correctKey.toUpperCase()} y ${incorrectKey.toUpperCase()} durante la tarea para no olvidarlas.</p>
     <p>Pulse la barra espaciadora para comenzar.</p>
   `,
@@ -461,7 +501,7 @@ timeline.push(saveDataBlock);
 /* Goodbye message trial */
 let goodbye = {
   type: jsPsychHtmlKeyboardResponse,
-  stimulus: "Muchas gracias por haber realizado el experimento. <br /> </p></p> Pulsa la barra espaciadora para salir del experimento.",
+  stimulus: "Muchas gracias por haber realizado el experimento. <br /> </p></p> Pulsa la barra espaciadora para salir.",
   choices: [' '],
 };
 timeline.push(goodbye);
